@@ -1,0 +1,18 @@
+diff -ruN svnkit-1.8.5.origin/svnkit/src/main/java/org/tmatesoft/svn/core/internal/io/svn/ssh/SshSession.java svnkit-1.8.5.ssh2fix/svnkit/src/main/java/org/tmatesoft/svn/core/internal/io/svn/ssh/SshSession.java
+--- svnkit-1.8.5.origin/svnkit/src/main/java/org/tmatesoft/svn/core/internal/io/svn/ssh/SshSession.java 2014-06-11 12:40:54.643251610 +0200
++++ svnkit-1.8.5.ssh2fix/svnkit/src/main/java/org/tmatesoft/svn/core/internal/io/svn/ssh/SshSession.java        2014-06-12 09:31:36.714009852 +0200
+@@ -44,7 +44,13 @@
+     }
+     
+     public void waitForCondition(int code, long timeout) {
+-        mySession.waitForCondition(code, timeout);
++        try {
++            mySession.waitForCondition(code, timeout);
++        }
++        catch (InterruptedException ex) {
++            /* I applogize myself for doing such a terrible hack,
++             * but this is the best approach in this particular case. */
++        }
+     }
+     
+     public void execCommand(String command) throws IOException {
