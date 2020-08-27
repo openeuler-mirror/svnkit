@@ -1,0 +1,4 @@
+version_control: svn
+src_repo: https://svn.svnkit.com/repos/svnkit/tags
+tag_prefix: ""
+seperator: "."
